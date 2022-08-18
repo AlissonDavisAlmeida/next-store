@@ -8,6 +8,8 @@
 # testing
 /coverage
 
+teslo-shop-assets
+
 # next.js
 /.next/
 /out/
