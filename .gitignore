@@ -8,7 +8,11 @@
 # testing
 /coverage
 
+<<<<<<< HEAD
 public
+=======
+teslo-shop-assets
+>>>>>>> c2d10bd4e5d765190082ae9505a06d35757b6ba6
 
 # next.js
 /.next/
