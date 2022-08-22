@@ -8,9 +8,13 @@
 # testing
 /coverage
 
+public
+
 # next.js
 /.next/
 /out/
+
+teslo-shop-assets
 
 # production
 /build
