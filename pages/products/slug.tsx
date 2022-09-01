@@ -1,6 +1,10 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { ShopLAyout } from "../../components/layout";
+import { ProductSlideShow } from "../../components/products/ProductsSlideShow";
 import { initialData } from "../../database/products"
+
+import "react-slideshow-image/dist/styles.css";
+import ItemCounter from "../../components/ui/ItemCounter";
 
 const product = initialData.products[0]
 
@@ -12,7 +16,7 @@ function Slug() {
         >
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
-
+                    <ProductSlideShow images={product.images}/>
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -24,6 +28,7 @@ function Slug() {
 
                         <Box sx={{ my: 2 }}>
                             <Typography variant="subtitle2">Quantity</Typography>
+                            <ItemCounter/>
                         </Box>
 
                         <Button color="secondary" className="circular-btn">
