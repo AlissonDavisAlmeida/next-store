@@ -1,5 +1,25 @@
-import { SearchOutlined, AccountCircleOutlined, ConfirmationNumberOutlined, MaleOutlined, FemaleOutlined, EscalatorWarningOutlined, VpnKeyOutlined, LoginOutlined, CategoryOutlined, AdminPanelSettings } from "@mui/icons-material"
-import { Box, Divider, Drawer, IconButton, Input, InputAdornment, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material"
+import {
+    SearchOutlined,
+    AccountCircleOutlined,
+    ConfirmationNumberOutlined,
+    MaleOutlined,
+    FemaleOutlined,
+    EscalatorWarningOutlined,
+    VpnKeyOutlined,
+    LoginOutlined,
+    CategoryOutlined, AdminPanelSettings
+} from "@mui/icons-material"
+import {
+    Box,
+    Divider,
+    Drawer,
+    IconButton,
+    Input,
+    InputAdornment,
+    List,
+    ListItem,
+    ListItemIcon, ListItemText, ListSubheader
+} from "@mui/material"
 
 export const SideMenu = () => {
 
