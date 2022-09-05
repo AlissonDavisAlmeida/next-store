@@ -5,6 +5,7 @@ import { initialData } from "../../database/products"
 
 import "react-slideshow-image/dist/styles.css";
 import ItemCounter from "../../components/ui/ItemCounter";
+import {SizeSelector} from "../../components/products/";
 
 const product = initialData.products[0]
 
@@ -16,7 +17,7 @@ function Slug() {
         >
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
-                    <ProductSlideShow images={product.images}/>
+                    <ProductSlideShow images={product.images} />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -28,7 +29,10 @@ function Slug() {
 
                         <Box sx={{ my: 2 }}>
                             <Typography variant="subtitle2">Quantity</Typography>
-                            <ItemCounter/>
+                            <ItemCounter />
+                            <SizeSelector 
+                                    sizes={product.sizes}
+                                    />
                         </Box>
 
                         <Button color="secondary" className="circular-btn">
