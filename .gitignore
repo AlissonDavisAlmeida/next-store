@@ -20,9 +20,12 @@ teslo-shop-assets
 
 teslo-shop-assets
 
+.env
+
 # production
 /build
 
+mongo
 # misc
 .DS_Store
 *.pem
