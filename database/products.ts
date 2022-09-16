@@ -1,4 +1,7 @@
+import { SHOP_CONSTANTS } from "./constants";
+
 export interface SeedProduct {
+    _id?: string;
     description: string;
     images: string[];
     inStock: number;
@@ -8,7 +11,10 @@ export interface SeedProduct {
     tags: string[];
     title: string;
     type: ValidTypes;
-    gender: 'men'|'women'|'kid'|'unisex'
+    gender:  typeof SHOP_CONSTANTS.validGenders[keyof typeof SHOP_CONSTANTS.validGenders];
+
+    createdAt?: string
+    updatedAt?: string
 }
 
 export type ValidSizes = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
