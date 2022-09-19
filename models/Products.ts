@@ -6,58 +6,59 @@ import { SeedProduct } from "../database/products"
 const productSchema = new Schema({
     description: {
         type: String,
-        required: true  
+        required: true
     },
-    images:{
+    images: {
         type: [String]
     },
-    inStock:{
+    inStock: {
         type: Number,
         required: true,
         default: 0
     },
-    price:{
+    price: {
         type: Number,
         required: true,
         default: 0
     },
-    sizes:[{
+    sizes: [{
         type: String,
-        enum:{
-            values: ['XS','S','M','L','XL','XXL','XXXL'],
+        enum: {
+            values: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
             message: 'Invalid size'
         }
     }],
-    slug:{
+    slug: {
         type: String,
         required: true,
         unique: true
     },
-    tags:{
+    tags: {
         type: [String]
     },
-    title:{
+    title: {
         type: String,
         required: true
     },
-    type:{
+    type: {
         type: String,
-        enum:{
-            values: ['shirts','pants','hoodies','hats'],
+        enum: {
+            values: ['shirts', 'pants', 'hoodies', 'hats'],
             message: "Invalid Type"
         }
     },
-    gender:{
+    gender: {
         type: String,
-        enum:{
-            values: ["men","women","kid","unisex"],
-            message:"Invalid gender"
+        enum: {
+            values: ["men", "women", "kid", "unisex"],
+            message: "Invalid gender"
         }
     }
-},{
+}, {
     timestamps: true
 })
 
+productSchema.index({ title: "text", tags: "text" })
 
 const Product: Model<SeedProduct> = mongoose.models.Product || model("Product", productSchema)
 
