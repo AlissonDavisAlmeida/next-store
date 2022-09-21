@@ -2,12 +2,14 @@ import { Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import { ShopLAyout } from '../components/layout'
 import { ProductsList, ProductWithId } from '../components/products'
-import { initialData } from "../database/products"
+// import { initialData } from "../database/products"
+import { useProducts } from '../hooks'
 
 
 
 const Home: NextPage = () => {
 
+  const { products, isError, isLoading } = useProducts("products")
 
 
   return (
@@ -19,7 +21,9 @@ const Home: NextPage = () => {
         Store Page
       </Typography>
 
-      <ProductsList products={initialData.products as ProductWithId[]} />
+
+      {isLoading && <Typography variant='h1'>Loading...</Typography>}
+      {!isLoading && <ProductsList products={products as ProductWithId[]} />}
     </ShopLAyout>
   )
 }
