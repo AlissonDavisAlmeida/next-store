@@ -5,13 +5,15 @@ import { ProductsList, ProductWithId } from '../components/products'
 import { initialData } from "../database/products"
 
 
+
 const Home: NextPage = () => {
+
+
+
   return (
     <ShopLAyout
       title='Home Page'
       pageDescription='Home Page'
-
-
     >
       <Typography variant="h1" component={"h1"}>
         Store Page
