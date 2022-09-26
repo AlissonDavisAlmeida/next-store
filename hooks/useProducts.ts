@@ -8,11 +8,9 @@ type ResponseData = {
 
 }
 
-const fetcher = (...args: [key: string]) => fetch(...args).then((res) => res.json());
 
 export const useProducts = (url: string, configSWR: SWRConfiguration = {}) => {
 
-    // const { data, error } = useSWR<ResponseData>(`/api/${url}`, fetcher, configSWR);
     const { data, error } = useSWR<ResponseData>(`/api/${url}`, configSWR);
 
 

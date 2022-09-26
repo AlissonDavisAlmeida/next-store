@@ -1,13 +1,21 @@
 import NextLink from "next/link";
 import { AppBar, Badge, Button, IconButton, Link, Toolbar, Typography } from "@mui/material";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Box } from "@mui/material";
 import { SearchOutlined, ShoppingCartOutlined } from "@mui/icons-material";
+import { useRouter } from "next/router";
+import { UIContext } from "../../../context";
 
 
 export const Navbar: FC = (props) => {
 
-    
+    const route = useRouter()
+
+    const { toogleSideMenu } = useContext(UIContext)
+
+    const color = (path: string) => {
+        return route.pathname === path ? "info" : "primary"
+    }
 
     return (
         <AppBar>
@@ -21,25 +29,25 @@ export const Navbar: FC = (props) => {
 
                 <Box flex={1} />
                 <Box sx={{
-                    display: {xs:"none", sm:"flex"},
+                    display: { xs: "none", sm: "flex" },
                 }}>
                     <NextLink href="/category/men" passHref>
                         <Link>
-                            <Button>
+                            <Button color={color("/category/men")}>
                                 Mens
                             </Button>
                         </Link>
                     </NextLink>
                     <NextLink href="/category/women" passHref>
                         <Link>
-                            <Button>
+                            <Button color={color("/category/women")}>
                                 Womens
                             </Button>
                         </Link>
                     </NextLink>
                     <NextLink href="/category/kids" passHref>
                         <Link>
-                            <Button>
+                            <Button color={color("/category/kids")}>
                                 Kids
                             </Button>
                         </Link>
@@ -62,7 +70,7 @@ export const Navbar: FC = (props) => {
                     </Link>
                 </NextLink>
 
-                <Button>
+                <Button onClick={toogleSideMenu}>
                     Menu
                 </Button>
             </Toolbar>

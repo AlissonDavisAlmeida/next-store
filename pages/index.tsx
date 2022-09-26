@@ -2,6 +2,7 @@ import { Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import { ShopLAyout } from '../components/layout'
 import { ProductsList, ProductWithId } from '../components/products'
+import { Loading } from '../components/ui/Loading'
 // import { initialData } from "../database/products"
 import { useProducts } from '../hooks'
 
@@ -22,7 +23,7 @@ const Home: NextPage = () => {
       </Typography>
 
 
-      {isLoading && <Typography variant='h1'>Loading...</Typography>}
+      {isLoading && <Loading />}
       {!isLoading && <ProductsList products={products as ProductWithId[]} />}
     </ShopLAyout>
   )
