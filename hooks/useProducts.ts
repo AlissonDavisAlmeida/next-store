@@ -3,13 +3,13 @@ import { SeedProduct } from "../database/products";
 
 
 type ResponseData = {
-    products: SeedProduct[],
+    products: SeedProduct[];
     message: string
 
 }
 
 
-export const useProducts = (url: string, configSWR: SWRConfiguration = {}) => {
+export const useProducts = <T>(url: string, configSWR: SWRConfiguration = {}) => {
 
     const { data, error } = useSWR<ResponseData>(`/api/${url}`, configSWR);
 

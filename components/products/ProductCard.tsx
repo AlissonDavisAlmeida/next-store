@@ -26,7 +26,7 @@ export const ProductCard: FC<ProductCardProps> = ({ product }) => {
             onMouseLeave={() => setisHovered(false)}
         >
             <Card>
-                <NextLink href={`/products/slug`} passHref prefetch={false}>
+                <NextLink href={`/products/${product.slug}`} passHref prefetch={false}>
                     <Link>
                         <CardActionArea>
                             <CardMedia
