@@ -21,12 +21,18 @@ import {
     ListItemIcon, ListItemText, ListSubheader
 } from "@mui/material"
 import { useRouter } from "next/router"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { UIContext } from "../../../context"
 
 export const SideMenu = () => {
 
     const { push } = useRouter()
+
+    const onSearchTerm = () =>{
+        if(searchTerm.trim().length === 0) return
+
+        navigateTo(`/search/${searchTerm}`)
+    }
 
     const navigateTo = (url: string) => {
         toogleSideMenu()
@@ -35,6 +41,8 @@ export const SideMenu = () => {
 
 
     const { isOpenMenu, toogleSideMenu } = useContext(UIContext)
+
+    const [searchTerm, setSearchTerm] = useState("")
 
     return (
         <Drawer
@@ -53,11 +61,15 @@ export const SideMenu = () => {
 
                     <ListItem>
                         <Input
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onKeyDown={(e) => e.key === "Enter" && onSearchTerm()}
                             type='text'
                             placeholder="Buscar..."
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
+                                        onClick={onSearchTerm}
                                         aria-label="toggle password visibility"
                                     >
                                         <SearchOutlined />

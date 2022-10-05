@@ -32,3 +32,16 @@ export const getAllProducts = async (): Promise<ProductSlugs[]> => {
     return JSON.parse(JSON.stringify(productsSlugs))
 
 }
+
+export const getProductsByTerm = async (term: string): Promise<ProductSlugs[]> => {
+
+    await connect()
+
+    const products = await Product.find({ $text: { $search: term.toLowerCase() } })
+        .select("title images price inStock slug -_id").lean()
+
+    await disconnect()
+
+    return products
+
+}

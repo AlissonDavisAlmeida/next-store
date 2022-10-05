@@ -1,5 +1,5 @@
-import NextLink from "next/link";
 import { Box, Button, Grid, Link, TextField, Typography } from "@mui/material";
+import NextLink from "next/link";
 import { AuthLayout } from "../../components/layout";
 
 function Login() {

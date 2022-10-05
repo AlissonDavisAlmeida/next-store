@@ -1,16 +1,13 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { ShopLAyout } from "../../components/layout";
 import { ProductSlideShow } from "../../components/products/ProductsSlideShow";
-import { SeedProduct } from "../../database/products"
+import { SeedProduct } from "../../database/products";
 
+import { GetStaticPaths, GetStaticProps } from "next";
 import "react-slideshow-image/dist/styles.css";
-import ItemCounter from "../../components/ui/ItemCounter";
 import { SizeSelector } from "../../components/products/";
-import { useRouter } from "next/router";
-import { useProducts } from "../../hooks";
-import { Loading } from "../../components/ui/Loading";
+import ItemCounter from "../../components/ui/ItemCounter";
 import { getAllProducts, getProductBySlug } from "../../database/dbProducts";
-import { GetStaticPaths, GetStaticPathsResult, GetStaticProps, GetStaticPropsContext } from "next";
 
 interface SlugProps {
     product: SeedProduct
@@ -67,7 +64,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const allSlugs = await getAllProducts()
 
     return {
-        paths: allSlugs.map(({slug}) => ({
+        paths: allSlugs.map(({ slug }) => ({
             params: {
                 slug
             }
@@ -83,9 +80,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
     const product = await getProductBySlug(slug)
 
-    if(!product) {
+    if (!product) {
         return {
-            redirect:{
+            redirect: {
                 destination: "/",
                 permanent: false
             }
