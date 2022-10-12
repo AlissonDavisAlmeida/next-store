@@ -25,7 +25,7 @@ export const getAllProducts = async (): Promise<ProductSlugs[]> => {
 
     await connect()
 
-    const productsSlugs = await Product.find().select("slug -_id").lean()
+    const productsSlugs = await Product.find().select("title images price inStock slug -_id").lean()
 
     await disconnect()
 

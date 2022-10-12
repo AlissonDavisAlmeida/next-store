@@ -1,9 +1,8 @@
+import { ClearOutlined, SearchOutlined, ShoppingCartOutlined } from "@mui/icons-material";
+import { AppBar, Badge, Box, Button, IconButton, Input, InputAdornment, Link, Toolbar, Typography } from "@mui/material";
 import NextLink from "next/link";
-import { AppBar, Badge, Button, IconButton, Link, Toolbar, Typography } from "@mui/material";
-import { FC, useContext } from "react";
-import { Box } from "@mui/material";
-import { SearchOutlined, ShoppingCartOutlined } from "@mui/icons-material";
 import { useRouter } from "next/router";
+import { FC, useContext, useState } from "react";
 import { UIContext } from "../../../context";
 
 
@@ -13,9 +12,22 @@ export const Navbar: FC = (props) => {
 
     const { toogleSideMenu } = useContext(UIContext)
 
+    const [searchTerm, setSearchTerm] = useState("")
+    const [isSearchVisible, setIsSearchVisible] = useState(false)
+
     const color = (path: string) => {
         return route.pathname === path ? "info" : "primary"
     }
+
+
+    const onSearchTerm = () => {
+        if (searchTerm.trim().length === 0) return
+
+        route.push(`/search/${searchTerm}`)
+
+    }
+
+
 
     return (
         <AppBar>
@@ -28,9 +40,11 @@ export const Navbar: FC = (props) => {
                 </NextLink>
 
                 <Box flex={1} />
-                <Box sx={{
-                    display: { xs: "none", sm: "flex" },
-                }}>
+                <Box
+                    className="fadeIn"
+                    sx={{
+                        display: isSearchVisible ? "none" : { xs: "none", sm: "flex" },
+                    }}>
                     <NextLink href="/category/men" passHref>
                         <Link>
                             <Button color={color("/category/men")}>
@@ -56,9 +70,54 @@ export const Navbar: FC = (props) => {
                 </Box>
                 <Box flex={1} />
 
-                <IconButton>
+                <IconButton
+                    sx={{
+                        display: { xs: "flex", sm: "none" }
+                    }}
+                    onClick={toogleSideMenu}
+                >
                     <SearchOutlined />
                 </IconButton>
+
+
+                {
+                    isSearchVisible ?
+                        (
+                            <Input
+                                sx={{
+                                    display: { xs: "none", sm: "flex" },
+                                }}
+                                className="fadeIn"
+                                autoFocus
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onKeyDown={(e) => e.key === "Enter" && onSearchTerm()}
+                                type='text'
+                                placeholder="Buscar..."
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={() => {
+                                                setIsSearchVisible(false)
+                                            }}
+                                            aria-label="toggle password visibility"
+                                        >
+                                            <ClearOutlined />
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                        ) :
+                        (
+                            <IconButton
+                                onClick={() => setIsSearchVisible(true)}
+                                className="fadeIn"
+                            >
+                                <SearchOutlined />
+                            </IconButton>
+                        )
+                }
+
 
                 <NextLink href="/cart" passHref>
                     <Link>

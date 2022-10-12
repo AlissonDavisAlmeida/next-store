@@ -1,30 +1,41 @@
 import { Typography } from '@mui/material'
-import type { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import { ShopLAyout } from '../../components/layout'
 import { ProductsList, ProductWithId } from '../../components/products'
 import { Loading } from '../../components/ui/Loading'
-import { getProductsByTerm } from '../../database/dbProducts'
+import { getAllProducts, getProductsByTerm } from '../../database/dbProducts'
 import { useProducts } from '../../hooks'
 
+interface SearchPageProps {
+  products: ProductWithId[]
+  foundProducts: boolean
+  query: string
+}
 
+const SearchPage: NextPage<SearchPageProps> = ({ products, foundProducts, query }) => {
 
-const SearchPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ products }) => {
-
-
-  console.log(products)
 
   return (
     <ShopLAyout
       title='Home Page'
       pageDescription='Home Page'
     >
-      <Typography variant="h1" component={"h1"}>
-        Search Product
-      </Typography>
-      <Typography variant="h2" sx={{ mb: 1 }}>ABC --- 123</Typography>
+      {
+        foundProducts && (<Typography variant="h1" component={"h1"} textTransform="capitalize">
+          Search Product
+        </Typography>)
+      }
+
+      {
+        !foundProducts && (<Typography variant="h1" component={"h1"} textTransform="capitalize">
+          No Products Found with terms: {query}
+        </Typography>)
+      }
+
+      <Typography variant="h2" sx={{ mb: 1 }}>{query}</Typography>
 
 
-      {<ProductsList products={products as ProductWithId[]} />}
+      {<ProductsList products={products} />}
     </ShopLAyout>
   )
 }
@@ -40,16 +51,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       permanent: true
     }
   }
-
+  let foundProducts = true
   let products = await getProductsByTerm(query)
 
-  if (!products) {
-
+  if (products.length === 0) {
+    products = await getAllProducts()
+    foundProducts = false
   }
 
   return {
     props: {
-      products
+      products,
+      foundProducts,
+      query
     }
   }
 
