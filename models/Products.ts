@@ -1,4 +1,3 @@
-import { Mode } from "fs"
 import mongoose, { Schema, model, Model } from "mongoose"
 import { SeedProduct } from "../database/products"
 

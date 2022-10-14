@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Chip, Grid, Typography } from "@mui/material";
 import { ShopLAyout } from "../../components/layout";
 import { ProductSlideShow } from "../../components/products/ProductsSlideShow";
 import { SeedProduct } from "../../database/products";
@@ -41,9 +41,21 @@ function Slug({ product }: SlugProps) {
                             />
                         </Box>
 
-                        <Button color="secondary" className="circular-btn">
-                            Add to cart
-                        </Button>
+
+                        {
+                            product.inStock === 0 ? (
+                                <Chip
+                                    color="error"
+                                    variant="outlined"
+                                    label={`No available sizes`}
+                                   
+                                />
+                            ) : (
+                                <Button color="secondary" className="circular-btn">
+                                    Add to cart
+                                </Button>
+                            )
+                        }
 
                         <Box sx={{ mt: 3 }}>
                             <Typography variant="subtitle2">Description</Typography>

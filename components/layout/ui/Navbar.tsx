@@ -110,6 +110,9 @@ export const Navbar: FC = (props) => {
                         ) :
                         (
                             <IconButton
+                                sx={{
+                                    display: { xs: "none", sm: "flex" }
+                                }}
                                 onClick={() => setIsSearchVisible(true)}
                                 className="fadeIn"
                             >
