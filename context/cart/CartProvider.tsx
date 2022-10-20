@@ -18,9 +18,17 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
 
     const [state, dispatch] = useReducer(cartReducer, initial_state)
 
+    const addProduct = (product: Cart) => {
+        dispatch({
+            type: "[Cart]-AddToCart",
+            payload: product
+        })
+    }
+
     return (
         <CartContext.Provider value={{
-            cart: state.cart
+            ...state,
+            addProduct
         }}>
             {children}
         </CartContext.Provider>

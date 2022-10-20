@@ -8,12 +8,41 @@ import "react-slideshow-image/dist/styles.css";
 import { SizeSelector } from "../../components/products/";
 import ItemCounter from "../../components/ui/ItemCounter";
 import { getAllProducts, getProductBySlug } from "../../database/dbProducts";
+import { useContext, useState } from "react";
+import { Cart, CartContext } from "../../context";
+import { useRouter } from "next/router";
 
 interface SlugProps {
     product: SeedProduct
 }
 
 function Slug({ product }: SlugProps) {
+
+    const router = useRouter()
+
+    const { addProduct: addProductToCart } = useContext(CartContext)
+
+    const [tempCartProduct, setTempCartProduct] = useState<Cart>({
+        _id: product._id,
+        images: product.images[0],
+        price: product.price,
+        sizes: undefined,
+        slug: product.slug,
+        title: product.title,
+        gender: product.gender,
+        quantity: 1,
+    })
+
+    const addProduct = () => {
+        if (!tempCartProduct.sizes) return
+
+        console.log(tempCartProduct)
+
+        addProductToCart(tempCartProduct)
+
+        router.push('/cart')
+    }
+
 
     return (
         <ShopLAyout
@@ -35,9 +64,19 @@ function Slug({ product }: SlugProps) {
 
                         <Box sx={{ my: 2 }}>
                             <Typography variant="subtitle2">Quantity</Typography>
-                            <ItemCounter />
+                            <ItemCounter
+                                quantity={tempCartProduct.quantity}
+                                maxVal={product.inStock}
+                                updateQuantity={(quantity) => setTempCartProduct(prevState => ({
+                                    ...prevState,
+                                    quantity
+                                }))}
+
+                            />
                             <SizeSelector
+                                selectedSize={tempCartProduct.sizes}
                                 sizes={product.sizes}
+                                onSelectSize={(sizes) => setTempCartProduct(prevState => ({ ...prevState, sizes }))}
                             />
                         </Box>
 
@@ -48,11 +87,14 @@ function Slug({ product }: SlugProps) {
                                     color="error"
                                     variant="outlined"
                                     label={`No available sizes`}
-                                   
+
                                 />
                             ) : (
-                                <Button color="secondary" className="circular-btn">
-                                    Add to cart
+                                <Button color="secondary" className="circular-btn" onClick={addProduct}>
+                                    {
+                                        tempCartProduct.sizes ? "Add to cart" : "Select size"
+
+                                    }
                                 </Button>
                             )
                         }

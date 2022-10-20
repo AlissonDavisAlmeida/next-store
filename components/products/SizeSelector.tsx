@@ -4,9 +4,10 @@ import { ValidSizes } from "../../database/products";
 interface SizeSelectorProps {
     selectedSize?: ValidSizes
     sizes: ValidSizes[]
+    onSelectSize: (size: ValidSizes) => void
 }
 
-export const SizeSelector = ({ selectedSize, sizes }: SizeSelectorProps) => {
+export const SizeSelector = ({ selectedSize, sizes, onSelectSize }: SizeSelectorProps) => {
     return (
         <Box>
             {
@@ -15,6 +16,7 @@ export const SizeSelector = ({ selectedSize, sizes }: SizeSelectorProps) => {
                         key={size}
                         size='small'
                         color={selectedSize === size ? 'secondary' : 'primary'}
+                        onClick={() => onSelectSize(size)}
                     >
                         {size}
                     </Button>

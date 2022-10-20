@@ -6,7 +6,7 @@ export interface Cart {
     _id?: string;
     images: string;
     price: number;
-    sizes: ValidSizes;
+    sizes?: ValidSizes;
     slug: string;
     title: string;
     gender: typeof SHOP_CONSTANTS.validGenders[keyof typeof SHOP_CONSTANTS.validGenders];
@@ -15,6 +15,7 @@ export interface Cart {
 
 interface CartContextProps {
     cart: Cart[]
+    addProduct: (product: Cart) => void
 }
 
 export const CartContext = createContext<CartContextProps>({} as CartContextProps)
