@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { SHOP_CONSTANTS } from "../../../database/constants";
 import { connect, disconnect } from "../../../database/db";
-import { SeedProduct } from "../../../database/products";
+import { SeedProduct } from "../../../database/seed-data";
 import Product from "../../../models/Products";
 
 type Data = {
@@ -38,7 +38,6 @@ async function getProducts(req: NextApiRequest, res: NextApiResponse<Data>) {
 
     const products = await Product.find(condition)
         .select("title images price inStock slug -_id")
-        .lean()
 
     await disconnect()
 

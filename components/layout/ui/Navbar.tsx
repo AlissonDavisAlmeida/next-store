@@ -2,8 +2,8 @@ import { ClearOutlined, SearchOutlined, ShoppingCartOutlined } from "@mui/icons-
 import { AppBar, Badge, Box, Button, IconButton, Input, InputAdornment, Link, Toolbar, Typography } from "@mui/material";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { FC, useContext, useState } from "react";
-import { UIContext } from "../../../context";
+import { FC, useCallback, useContext, useMemo, useState } from "react";
+import { CartContext, UIContext } from "../../../context";
 
 
 export const Navbar: FC = (props) => {
@@ -14,6 +14,8 @@ export const Navbar: FC = (props) => {
 
     const [searchTerm, setSearchTerm] = useState("")
     const [isSearchVisible, setIsSearchVisible] = useState(false)
+
+    const { quantity } = useContext(CartContext)
 
     const color = (path: string) => {
         return route.pathname === path ? "info" : "primary"
@@ -27,7 +29,7 @@ export const Navbar: FC = (props) => {
 
     }
 
-
+    
 
     return (
         <AppBar>
@@ -125,7 +127,7 @@ export const Navbar: FC = (props) => {
                 <NextLink href="/cart" passHref>
                     <Link>
                         <IconButton>
-                            <Badge badgeContent={2} color="secondary">
+                            <Badge badgeContent={quantity} color="secondary">
                                 <ShoppingCartOutlined />
                             </Badge>
                         </IconButton>

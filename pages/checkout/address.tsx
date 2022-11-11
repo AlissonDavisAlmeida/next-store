@@ -1,6 +1,8 @@
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { GetServerSideProps } from "next";
 import { FC } from "react";
 import { ShopLAyout } from "../../components/layout";
+import { verifyToken } from "../../utils/jwt";
 const Address: FC = () => {
 
 
@@ -11,7 +13,7 @@ const Address: FC = () => {
         >
             <Typography variant="h1" component="h1">Destination</Typography>
 
-            <Grid container spacing={2} sx={{mt:2}}>
+            <Grid container spacing={2} sx={{ mt: 2 }}>
                 <Grid item xs={12} sm={6}>
                     <TextField label="Name" variant="filled" fullWidth />
                 </Grid>
@@ -51,7 +53,7 @@ const Address: FC = () => {
             </Grid>
 
             <Box sx={{
-                mt:5,
+                mt: 5,
                 display: 'flex',
                 justifyContent: 'center'
 
@@ -66,3 +68,35 @@ const Address: FC = () => {
 }
 
 export default Address
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+
+    const { token = "" } = req.cookies
+    let userId = ""
+    let isValidToken = false
+
+    try {
+        userId = (await verifyToken(token))._id
+        isValidToken = true
+    } catch (error) {
+        isValidToken = false
+        console.log(error)
+    }
+
+    if(!isValidToken) {
+        return {
+            redirect: {
+                destination: "/auth/login?page=/checkout/address",
+                permanent: false
+            }
+        }
+    }
+
+
+
+    return {
+        props: {
+            
+        }
+    }
+}

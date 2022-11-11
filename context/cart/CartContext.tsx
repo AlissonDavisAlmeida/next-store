@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { SHOP_CONSTANTS } from "../../database/constants";
-import { ValidSizes, ValidTypes } from "../../database/products";
+import { ValidSizes, ValidTypes } from "../../database/seed-data";
 
 export interface Cart {
     _id?: string;
@@ -16,6 +16,11 @@ export interface Cart {
 interface CartContextProps {
     cart: Cart[]
     addProduct: (product: Cart) => void
+    updateCartQuantity: (product: Cart) => void
+    removeCartProduct: (product: Cart) => void
+    quantity: number
+    total: number
+    isLoaded: boolean
 }
 
 export const CartContext = createContext<CartContextProps>({} as CartContextProps)

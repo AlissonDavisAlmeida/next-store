@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { connect, disconnect } from "../../../../database/db";
-import { SeedProduct } from "../../../../database/products";
+import { SeedProduct } from "../../../../database/seed-data";
 import Product from "../../../../models/Products";
 
 type Data = {

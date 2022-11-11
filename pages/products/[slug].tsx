@@ -1,7 +1,7 @@
 import { Box, Button, Chip, Grid, Typography } from "@mui/material";
 import { ShopLAyout } from "../../components/layout";
 import { ProductSlideShow } from "../../components/products/ProductsSlideShow";
-import { SeedProduct } from "../../database/products";
+import { SeedProduct } from "../../database/seed-data";
 
 import { GetStaticPaths, GetStaticProps } from "next";
 import "react-slideshow-image/dist/styles.css";
@@ -36,7 +36,6 @@ function Slug({ product }: SlugProps) {
     const addProduct = () => {
         if (!tempCartProduct.sizes) return
 
-        console.log(tempCartProduct)
 
         addProductToCart(tempCartProduct)
 

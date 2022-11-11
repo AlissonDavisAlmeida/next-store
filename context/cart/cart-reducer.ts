@@ -5,6 +5,9 @@ import { Cart } from "./CartContext"
 type CartActionType =
     | { type: '[Cart]-LoadCart', payload: Cart[] }
     | { type: '[Cart]-AddToCart', payload: Cart }
+    | { type: '[Cart]-UpdateCartQuantity', payload: Cart }
+    | { type: '[Cart]-RemoveFromCart', payload: Cart }
+
 
 export const cartReducer = (state: CartProviderState, action: CartActionType) => {
 
@@ -12,6 +15,7 @@ export const cartReducer = (state: CartProviderState, action: CartActionType) =>
         case '[Cart]-LoadCart':
             return {
                 ...state,
+                isLoaded: true,
                 cart: action.payload
             }
         case '[Cart]-AddToCart':
@@ -41,6 +45,24 @@ export const cartReducer = (state: CartProviderState, action: CartActionType) =>
             return {
                 ...state,
                 cart: newCart
+            }
+
+        case '[Cart]-UpdateCartQuantity':
+
+            return {
+                ...state,
+                cart: state.cart.map(item => {
+                    if (item._id === action.payload._id && item.sizes === action.payload.sizes) {
+                        return action.payload
+                    }
+                    return item
+                })
+            }
+
+        case '[Cart]-RemoveFromCart':
+            return {
+                ...state,
+                cart: state.cart.filter(item => !(item._id === action.payload._id && item.sizes === action.payload.sizes))
             }
 
 

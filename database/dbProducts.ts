@@ -1,6 +1,6 @@
 import Product from "../models/Products"
 import { connect, disconnect } from "./db"
-import { SeedProduct } from "./products"
+import { SeedProduct } from "./seed-data"
 
 export const getProductBySlug = async (slug: string): Promise<SeedProduct | null> => {
 
@@ -42,6 +42,6 @@ export const getProductsByTerm = async (term: string): Promise<ProductSlugs[]> =
 
     await disconnect()
 
-    return products
+    return products as ProductSlugs[]
 
 }

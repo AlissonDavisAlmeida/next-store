@@ -2,7 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  staticPageGenerationTimeout: 100
+  cleanDistDir: true,
+  compiler: {
+    emotion: true,
+  }
 }
 
 module.exports = nextConfig
