@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo, useReducer } from "react"
 import { cartReducer } from "./cart-reducer"
-import { Cart, CartContext } from "./CartContext"
+import { Cart, CartContext, ShippingAddress } from "./CartContext"
 
 import Cookies from "js-cookie"
 
@@ -11,11 +11,13 @@ interface CartProviderProps {
 export interface CartProviderState {
     cart: Cart[]
     isLoaded: boolean
+    shippingAddress?: ShippingAddress
 }
 
 const initial_state: CartProviderState = {
     cart: Cookies.get("cart") ? JSON.parse(Cookies.get("cart")!) : [],
-    isLoaded: Cookies.get("cart") ? true : false
+    isLoaded: Cookies.get("cart") ? true : false,
+    shippingAddress: undefined
 }
 
 export const CartProvider: FC<CartProviderProps> = ({ children }) => {
@@ -27,6 +29,25 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
         Cookies.set("cart", JSON.stringify(state.cart))
 
     }, [state.cart])
+
+
+    useEffect(() => {
+        if (Cookies.get("name")) {
+
+            const shippingAddress = {
+                name: Cookies.get("name") || "",
+                nickname: Cookies.get("nickname") || "",
+                address: Cookies.get("address") || "",
+                address2: Cookies.get("address2") || "",
+                codePostal: Cookies.get("codePostal") || "",
+                city: Cookies.get("city") || "",
+                country: Cookies.get("country") || "",
+                phone: Cookies.get("phone") || "",
+            }
+
+            dispatch({ type: "[Cart]-LoadAddressFromCookies", payload: shippingAddress })
+        }
+    }, [])
 
 
     const addProduct = (product: Cart) => {
@@ -53,6 +74,13 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
 
     }
 
+    const updateAddress = (address: ShippingAddress) => {
+        dispatch({
+            type: "[Cart]-UpdateAddressFromCookies",
+            payload: address
+        })
+    }
+
     const quantity = useMemo(() => state.cart.reduce((acc, product) => acc + product.quantity, 0), [state.cart])
     const total = useMemo(() => state.cart.reduce((acc, product) => acc + product.price * product.quantity, 0), [state.cart])
 
@@ -62,6 +90,7 @@ export const CartProvider: FC<CartProviderProps> = ({ children }) => {
             addProduct,
             updateCartQuantity,
             removeCartProduct,
+            updateAddress,
             quantity,
             total
         }}>

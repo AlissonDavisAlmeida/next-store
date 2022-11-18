@@ -5,25 +5,30 @@ import { AuthProvider, CartProvider, UIProvider } from '../context'
 import '../styles/globals.css'
 import { lightTheme } from "../themes"
 
+import { SessionProvider } from 'next-auth/react'
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <SWRConfig
-      value={{
-        fetcher: (resource, init) => fetch(resource, init).then((res) => res.json()),
-      }}
-    >
-      <AuthProvider>
+    <SessionProvider>
 
-        <CartProvider>
-          <UIProvider>
-            <ThemeProvider theme={lightTheme}>
-              <CssBaseline />
-              <Component {...pageProps} />
-            </ThemeProvider>
-          </UIProvider>
-        </CartProvider>
-      </AuthProvider>
-    </SWRConfig>
+      <SWRConfig
+        value={{
+          fetcher: (resource, init) => fetch(resource, init).then((res) => res.json()),
+        }}
+      >
+        <AuthProvider>
+
+          <CartProvider>
+            <UIProvider>
+              <ThemeProvider theme={lightTheme}>
+                <CssBaseline />
+                <Component {...pageProps} />
+              </ThemeProvider>
+            </UIProvider>
+          </CartProvider>
+        </AuthProvider>
+      </SWRConfig>
+    </SessionProvider>
   )
 }
 

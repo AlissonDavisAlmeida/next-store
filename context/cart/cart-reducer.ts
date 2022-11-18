@@ -1,5 +1,5 @@
 import { CartProviderState } from "."
-import { Cart } from "./CartContext"
+import { Cart, ShippingAddress } from "./CartContext"
 
 
 type CartActionType =
@@ -7,6 +7,8 @@ type CartActionType =
     | { type: '[Cart]-AddToCart', payload: Cart }
     | { type: '[Cart]-UpdateCartQuantity', payload: Cart }
     | { type: '[Cart]-RemoveFromCart', payload: Cart }
+    | { type: '[Cart]-LoadAddressFromCookies', payload: ShippingAddress }
+    | { type: '[Cart]-UpdateAddressFromCookies', payload: ShippingAddress }
 
 
 export const cartReducer = (state: CartProviderState, action: CartActionType) => {
@@ -63,6 +65,13 @@ export const cartReducer = (state: CartProviderState, action: CartActionType) =>
             return {
                 ...state,
                 cart: state.cart.filter(item => !(item._id === action.payload._id && item.sizes === action.payload.sizes))
+            }
+
+        case "[Cart]-UpdateAddressFromCookies":
+        case "[Cart]-LoadAddressFromCookies":
+            return {
+                ...state,
+                shippingAddress: action.payload
             }
 
 

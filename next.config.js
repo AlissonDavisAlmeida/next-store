@@ -5,6 +5,8 @@ const nextConfig = {
   cleanDistDir: true,
   compiler: {
     emotion: true,
+  },
+  experimental:{
   }
 }
 

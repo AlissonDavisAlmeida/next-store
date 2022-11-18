@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken"
 
+
 type Payload = {
     _id: string
     email: string
@@ -25,3 +26,4 @@ export const verifyToken = async (token: string) => {
 
     return Promise.resolve(payload)
 }
+

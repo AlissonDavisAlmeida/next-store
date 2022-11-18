@@ -6,6 +6,8 @@ import { AuthContext, authReducer } from "."
 import { shopApi } from "../../api/shopApi";
 import { IUser } from "../../models/User";
 
+import { useSession } from "next-auth/react"
+
 export interface AuthState {
     isLoggedIn: boolean;
     user?: IUser
@@ -28,7 +30,17 @@ export type LoginPayload = {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const [state, dispatch] = useReducer(authReducer, initialState)
+
+    const { data, status } = useSession()
+
     const router = useRouter()
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            console.log(data.user)
+            dispatch({ type: "[Auth]-Login", payload: data.user as IUser })
+        }
+    }, [data, status])
 
     const checkToken = async () => {
 
@@ -58,11 +70,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
     }
 
-    useEffect(() => {
-        checkToken();
-
-    }, [])
-
 
     const login = async (user: LoginPayload): Promise<boolean> => {
         try {
@@ -84,10 +91,20 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
 
     const logout = (): void => {
-            Cookies.remove('token')
-            Cookies.remove('cart')
-            router.reload()
-        
+        Cookies.remove('token')
+        Cookies.remove('cart')
+
+        Cookies.remove("name")
+        Cookies.remove("nickname")
+        Cookies.remove("address")
+        Cookies.remove("address2")
+        Cookies.remove("codePostal")
+        Cookies.remove("city")
+        Cookies.remove("country")
+        Cookies.remove("phone")
+
+        router.reload()
+
     }
 
     const register = async (user: Pick<IUser, "name" | "email" | "password">): Promise<{ hasError: boolean, message: string }> => {

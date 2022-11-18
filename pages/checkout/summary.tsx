@@ -3,8 +3,13 @@ import { Typography, Grid, Card, CardContent, Divider, Box, Button, Link } from 
 import { CartList } from "../../components/cart/CartList";
 import { OrderSummary } from "../../components/cart/OrderSummary";
 import { ShopLAyout } from "../../components/layout";
+import { useContext } from "react";
+import { CartContext } from "../../context";
 
 function Summary() {
+
+    const { shippingAddress, quantity } = useContext(CartContext)
+
     return (
         <ShopLAyout
             title="Summary of your order"
@@ -22,7 +27,7 @@ function Summary() {
                 <Grid item xs={12} md={5} >
                     <Card className="summary-card">
                         <CardContent>
-                            <Typography variant="h2">Summary (3 products)</Typography>
+                            <Typography variant="h2">Summary ({quantity} {quantity <= 1 ? 'product' : 'products'})</Typography>
                             <Divider sx={{ my: 1 }} />
 
                             <Box
@@ -37,11 +42,10 @@ function Summary() {
                             </Box>
 
                             <Typography variant="subtitle1">delivery address</Typography>
-                            <Typography>Alisson</Typography>
-                            <Typography>delivery address</Typography>
-                            <Typography>delivery address</Typography>
-                            <Typography>delivery address</Typography>
-                            <Typography>delivery address</Typography>
+                            <Typography>{shippingAddress?.name}</Typography>
+                            <Typography>{shippingAddress?.address}</Typography>
+                            <Typography>{shippingAddress?.city},{shippingAddress?.country}</Typography>
+                            <Typography>{shippingAddress?.codePostal}</Typography>
 
                             <Divider sx={{ my: 1 }} />
 
